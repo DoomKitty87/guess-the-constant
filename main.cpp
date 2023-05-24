@@ -1,8 +1,10 @@
 #include <iostream>
 #include <string>
+#include "parser.h"
 using namespace std;
 
-static class functions
+/*
+class functions
 {
   public:
     inline static const string functions1[1] = {"f(x)=ax+3"};
@@ -10,21 +12,25 @@ static class functions
     inline static const int functions1size = 1;
     inline static const int functions2size = 1;
 };
+*/
+
+/*
+  Generating functions
+
+  int a = rand() % 10;
+
+
+*/
 
 void game_1() {
   cout << "Generating hidden constants..." << endl;
-  int func = rand() % functions::functions1size;
-  cout << "The function is: " << functions::functions1[func] << endl;
-  int constant = rand() % 10;
+  string func = "3*x+2";
+  cout << "The function is: " << func << endl;
+  int constant = 3;
 
   for (int i = 0; i < 10; i++) {
     int inputval = rand() % 10;
-    cout << "x = " << inputval << ": ";
-    switch (func) {
-      case 0:
-        cout << "f(x) = " << (constant * inputval + 3) << endl;
-        break;
-    }
+    cout << "x = " << inputval << ": " << Parser::parseFunction(func, inputval) << endl;
   }
 
   while (true) {
