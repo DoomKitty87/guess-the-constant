@@ -37,7 +37,7 @@ void game(int constants) {
     function += to_string(constant_list[0]);
     constant_places[0] = function.length() - 1;
   }
-  for (int i = 0; i < constants - 1; i++) {
+  for (int i = 1; i < constants; i++) {
     int oper = rand() % 4;
     switch (oper) {
       case 0:
