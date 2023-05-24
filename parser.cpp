@@ -9,58 +9,135 @@ int ctoi(char a) {
 string Parser::parseFunction(string functionin, int x) {
   string function = functionin;
   for (int i = 0; i < function.length(); i++) {
+    if (function[i] == 'x') {
+      function[i] = x + '0';
+    }
+  }
+  for (int i = 0; i < function.length(); i++) {
     if (function[i] == '*') {
-      int mult1 = 0;
-      int mult2 = 0;
-      if (function[i - 1] == 'x') mult1 = x;
-      else mult1 = ctoi(function[i - 1]);
-      if (function[i + 1] == 'x') mult2 = x;
-      else mult2 = ctoi(function[i + 1]);
-      function[i] = to_string(mult1 * mult2)[0];
-      function[i + 1] = ' ';
-      function[i - 1] = ' ';
+      string multbefore = "";
+      char curr = function[i - 1];
+      int j = i - 1;
+      while (curr != ' ' && curr != '*' && curr != '/' && curr != '+' && curr != '-' && j >= 0) {
+        multbefore += curr;
+        j--;
+        curr = function[j];
+      }
+      reverse(multbefore.begin(), multbefore.end());
+      string multafter = "";
+      curr = function[i + 1];
+      j = i + 1;
+      while (curr != ' ' && curr != '*' && curr != '/' && curr != '+' && curr != '-' && j < function.length()) {
+        multafter += curr;
+        j++;
+        curr = function[j];
+      }
+      int mult1 = stoi(multbefore);
+      int mult2 = stoi(multafter);
+      function[i] = ' ';
+      for (int k = 1; k <= multbefore.length(); k++) {
+        function[i - k] = ' ';
+      }
+      for (int k = 1; k <= multafter.length(); k++) {
+        function[i + k] = ' ';
+      }
+      function.insert(i, to_string(mult1 * mult2));
       i--;
     }
     else if (function[i] == '/') {
-      int div1 = 0;
-      int div2 = 0;
-      if (function[i - 1] == 'x') div1 = x;
-      else div1 = ctoi(function[i - 1]);
-      if (function[i + 1] == 'x') div2 = x;
-      else div2 = ctoi(function[i + 1]);
-      function[i] = to_string(div1 / div2)[0];
-      function[i + 1] = ' ';
-      function[i - 1] = ' ';
+      string divbefore = "";
+      char curr = function[i - 1];
+      int j = i - 1;
+      while (curr != ' ' && curr != '*' && curr != '/' && curr != '+' && curr != '-' && j >= 0) {
+        divbefore += curr;
+        j--;
+        curr = function[j];
+      }
+      reverse(divbefore.begin(), divbefore.end());
+      string divafter = "";
+      curr = function[i + 1];
+      j = i + 1;
+      while (curr != ' ' && curr != '*' && curr != '/' && curr != '+' && curr != '-' && j < function.length()) {
+        divafter += curr;
+        j++;
+        curr = function[j];
+      }
+      int div1 = stoi(divbefore);
+      int div2 = stoi(divafter);
+      function[i] = ' ';
+      for (int k = 1; k <= divbefore.length(); k++) {
+        function[i - k] = ' ';
+      }
+      for (int k = 1; k <= divbefore.length(); k++) {
+        function[i + k] = ' ';
+      }
+      function.insert(i, to_string(div1 * div2));
       i--;
     }
-    remove_if(function.begin(), function.end(), isspace);
+    function.erase(remove_if(function.begin(), function.end(), isspace), function.end());
   }
   for (int i = 0; i < function.length(); i++) {
     if (function[i] == '+') {
-      int add1 = 0;
-      int add2 = 0;
-      if (function[i - 1] == 'x') add1 = x;
-      else add1 = ctoi(function[i - 1]);
-      if (function[i + 1] == 'x') add2 = x;
-      else add2 = ctoi(function[i + 1]);
-      function[i] = to_string(add1 + add2)[0];
-      function[i + 1] = ' ';
-      function[i - 1] = ' ';
+      string addbefore = "";
+      char curr = function[i - 1];
+      int j = i - 1;
+      while (curr != ' ' && curr != '+' && curr != '-' && j >= 0) {
+        addbefore += curr;
+        j--;
+        curr = function[j];
+      }
+      reverse(addbefore.begin(), addbefore.end());
+      string addafter = "";
+      curr = function[i + 1];
+      j = i + 1;
+      while (curr != ' ' && curr != '+' && curr != '-' && j < function.length()) {
+        addafter += curr;
+        j++;
+        curr = function[j];
+      }
+      int add1 = stoi(addbefore);
+      int add2 = stoi(addafter);
+      function[i] = ' ';
+      for (int k = 1; k <= addbefore.length(); k++) {
+        function[i - k] = ' ';
+      }
+      for (int k = 1; k <= addafter.length(); k++) {
+        function[i + k] = ' ';
+      }
+      function.insert(i, to_string(add1 + add2));
       i--;
     }
     else if (function[i] == '-') {
-      int sub1 = 0;
-      int sub2 = 0;
-      if (function[i - 1] == 'x') sub1 = x;
-      else sub1 = ctoi(function[i - 1]);
-      if (function[i + 1] == 'x') sub2 = x;
-      else sub2 = ctoi(function[i + 1]);
-      function[i] = to_string(sub1 - sub2)[0];
-      function[i + 1] = ' ';
-      function[i - 1] = ' ';
+      string subbefore = "";
+      char curr = function[i - 1];
+      int j = i - 1;
+      while (curr != ' ' && curr != '+' && curr != '-' && j >= 0) {
+        subbefore += curr;
+        j--;
+        curr = function[j];
+      }
+      reverse(subbefore.begin(), subbefore.end());
+      string subafter = "";
+      curr = function[i + 1];
+      j = i + 1;
+      while (curr != ' ' && curr != '+' && curr != '-' && j < function.length()) {
+        subafter += curr;
+        j++;
+        curr = function[j];
+      }
+      int sub1 = stoi(subbefore);
+      int sub2 = stoi(subafter);
+      function[i] = ' ';
+      for (int k = 1; k <= subbefore.length(); k++) {
+        function[i - k] = ' ';
+      }
+      for (int k = 1; k <= subafter.length(); k++) {
+        function[i + k] = ' ';
+      }
+      function.insert(i, to_string(sub1 - sub2));
       i--;
     }
-    remove_if(function.begin(), function.end(), isspace);
+    function.erase(remove_if(function.begin(), function.end(), isspace), function.end());
   }
   return function;
 }
