@@ -71,7 +71,7 @@ string Parser::parseFunction(string functionin, int x) {
       for (int k = 1; k <= divbefore.length(); k++) {
         function[i + k] = ' ';
       }
-      function.insert(i, to_string(div1 * div2));
+      function.insert(i, to_string(div1 / div2));
       i--;
     }
     function.erase(remove_if(function.begin(), function.end(), isspace), function.end());
